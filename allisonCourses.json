@@ -1,0 +1,125 @@
+[{
+	"id": 18760000000050040,
+	"name": "2017WI_DSGN_384-1_SEC20 Interdiscipinary Design Projects I",
+	"account_id": 18760000000000211,
+	"start_at": "2017-01-05T21:30:00Z",
+	"grading_standard_id": null,
+	"is_public": false,
+	"course_code": "2017WI_DSGN_384-1_SEC20",
+	"default_view": "modules",
+	"root_account_id": 18760000000000001,
+	"enrollment_term_id": 18760000000000112,
+	"end_at": "2017-03-31T05:00:00Z",
+	"public_syllabus": false,
+	"public_syllabus_to_auth": false,
+	"storage_quota_mb": 500,
+	"is_public_to_auth_users": false,
+	"apply_assignment_group_weights": true,
+	"calendar": {
+		"ics": "https://canvas.instructure.com/feeds/calendars/course_CkR5I8J09PjuvOdoy6rKLwVDn2eeB9LrHRyXmhpB.ics"
+	},
+	"time_zone": "America/Chicago",
+	"enrollments": [{
+		"type": "student",
+		"role": "StudentEnrollment",
+		"role_id": 821,
+		"user_id": 18760000000011486,
+		"enrollment_state": "active"
+	}],
+	"hide_final_grades": false,
+	"workflow_state": "available",
+	"restrict_enrollments_to_course_dates": false
+}, {
+	"id": 18760000000049804,
+	"name": "2017WI_EECS_330-0_SEC20 Human Computer Interaction",
+	"account_id": 18760000000000212,
+	"start_at": "2017-01-03T06:00:00Z",
+	"grading_standard_id": null,
+	"is_public": false,
+	"course_code": "2017WI_EECS_330-0_SEC20",
+	"default_view": "syllabus",
+	"root_account_id": 18760000000000001,
+	"enrollment_term_id": 18760000000000112,
+	"end_at": "2017-03-18T04:59:00Z",
+	"public_syllabus": false,
+	"public_syllabus_to_auth": false,
+	"storage_quota_mb": 500,
+	"is_public_to_auth_users": false,
+	"apply_assignment_group_weights": false,
+	"calendar": {
+		"ics": "https://canvas.instructure.com/feeds/calendars/course_w15huyXBRJv42imKNzgmmVJ86iWZoqZDfTnpC2VP.ics"
+	},
+	"time_zone": "America/Chicago",
+	"enrollments": [{
+		"type": "student",
+		"role": "StudentEnrollment",
+		"role_id": 821,
+		"user_id": 18760000000011486,
+		"enrollment_state": "active"
+	}],
+	"hide_final_grades": false,
+	"workflow_state": "available",
+	"restrict_enrollments_to_course_dates": false
+}, {
+	"id": 18760000000049756,
+	"name": "2017WI_EECS_339-0_SEC20 Introduction to Database Systems",
+	"account_id": 18760000000000212,
+	"start_at": "2016-12-13T06:00:00Z",
+	"grading_standard_id": null,
+	"is_public": null,
+	"course_code": "2017WI_EECS_339-0_SEC20",
+	"default_view": "wiki",
+	"root_account_id": 18760000000000001,
+	"enrollment_term_id": 18760000000000112,
+	"end_at": "2017-04-01T05:00:00Z",
+	"public_syllabus": false,
+	"public_syllabus_to_auth": false,
+	"storage_quota_mb": 500,
+	"is_public_to_auth_users": false,
+	"apply_assignment_group_weights": false,
+	"calendar": {
+		"ics": "https://canvas.instructure.com/feeds/calendars/course_4I2NElA3kLRKZLdhEo9eOAhYMITVYbF4vqkrTbSe.ics"
+	},
+	"time_zone": "America/Chicago",
+	"enrollments": [{
+		"type": "student",
+		"role": "StudentEnrollment",
+		"role_id": 821,
+		"user_id": 18760000000011486,
+		"enrollment_state": "active"
+	}],
+	"hide_final_grades": false,
+	"workflow_state": "available",
+	"restrict_enrollments_to_course_dates": true
+}, {
+	"id": 18760000000049758,
+	"name": "2017WI_EECS_351-0_SEC20 Introduction to Computer Graphics",
+	"account_id": 18760000000000212,
+	"start_at": "2016-12-13T06:00:00Z",
+	"grading_standard_id": null,
+	"is_public": false,
+	"course_code": "2017WI_EECS_351-0_SEC20",
+	"default_view": "modules",
+	"root_account_id": 18760000000000001,
+	"enrollment_term_id": 18760000000000112,
+	"end_at": "2017-04-01T05:00:00Z",
+	"public_syllabus": false,
+	"public_syllabus_to_auth": false,
+	"storage_quota_mb": 500,
+	"is_public_to_auth_users": false,
+	"apply_assignment_group_weights": false,
+	"calendar": {
+		"ics": "https://canvas.instructure.com/feeds/calendars/course_IKSz1VO7zs2RR1945CIsMlmfxRgqFPhu97sjePWK.ics"
+	},
+	"time_zone": "America/Chicago",
+	"enrollments": [{
+		"type": "student",
+		"role": "StudentEnrollment",
+		"role_id": 821,
+		"user_id": 18760000000011486,
+		"enrollment_state": "active"
+	}],
+	"hide_final_grades": false,
+	"workflow_state": "available",
+	"restrict_enrollments_to_course_dates": true
+}]
