@@ -53,7 +53,7 @@ def let_user_pick(options):
 #===================Canvas API stuff=====================
 nameOfCourse = str(let_user_pick(courseCode))
 print nameOfCourse
-asmt = requests.get('https://canvas.instructure.com/api/v1/courses/'+ nameOfCourse +'/assignments', headers=headers)
+asmt = requests.get('https://canvas.instructure.com/api/v1/courses/'+ nameOfCourse +'/assignments/?per_page=200', headers=headers)
 with open('data.txt', 'w') as outfile:
     json.dump(asmt.text, outfile)
 #modlist = requests.get('https://canvas.instructure.com/api/v1/courses/18760000000050040/modules', headers=headers)
