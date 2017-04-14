@@ -3,7 +3,7 @@ import json
 from collections import namedtuple
 
 #===================API HEADERS + Course Names + Authentication====================
-token = '1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s';
+token = ''; #use your own token
 params = (
     ('access_token', token),
 )
