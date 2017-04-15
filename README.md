@@ -8,9 +8,13 @@ Additional features to be included are as below:
   - NU Dining Integration
   - Messaging Function
 
-Task to be done:
+Tasks to be done:
   - Build UI
   - Build Calender/Database
+  - Pull Class Schedule from CAESAR everytime courses change on Canvas
+  - Pull Class Assignments from Canvas each time app start up or manual refresh or every week
+  - Add ability for manual entry of tasks
+  
 
 
 
