@@ -76,15 +76,24 @@ for course in caesarDetails:
     print courses
     print response.json()
     #Have to include this loop due to 395 series of classes which share many same classes
-    for i in response.json():
-        tempClass = i
-        print tempClass
-        print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[u'meeting_days'] + ' at ' + \
-                i[u'room'] + ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
-        a = raw_input('Is this the correct class?\r\nIf yes, enter y : ')
-        if a == 'y':
-            classSch.append(i)
-            break
+    counter = 0
+    while counter == 0:
+        for i in response.json():
+            tempClass = i
+            print tempClass
+            if i[u'room'] is None:
+                print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[
+                    u'meeting_days'] + ' at ' + "Room not specified" + \
+                      ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
+            else:
+                print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[u'meeting_days'] + ' at ' + \
+                    i[u'room'] + ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
+            a = raw_input('Is this the correct class?\r\nIf yes, enter y : ')
+            if a == 'y':
+                classSch.append(i)
+                counter = 1
+                break
+
 
 print classSch
 
