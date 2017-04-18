@@ -6,11 +6,12 @@ from Keys import token
 class Canvas:
 
     def __init__(self):
+        self.
 
-    def pullcourses:
+    def pullcourses(self):
 
 
-    def pullassignments:
+    def pullassignments(self):
 
 
 class Caesar:
@@ -18,10 +19,10 @@ class Caesar:
     def __init__(self):
 
 
-    def pullterms:
+    def pullterms(self):
 
 
-    def pullschedule:
+    def pullschedule(self):
 
 
 class DataEntry:
@@ -31,12 +32,11 @@ class DataEntry:
 
 class CheckCourse:
 
-    def checkcourses:
+    def checkcourses(self):
 
 
 class CheckTerm:
 
-    def checkterm:
+    def checkterm(self):
 
 
-class
