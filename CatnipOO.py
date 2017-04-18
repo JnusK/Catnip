@@ -6,7 +6,7 @@ from Keys import token
 class Canvas:
 
     def __init__(self):
-        self.
+
 
     def pullcourses(self):
 
@@ -40,3 +40,18 @@ class CheckTerm:
     def checkterm(self):
 
 
+class PriorityView:
+
+
+class ListView:
+
+
+class CalendarView:
+
+
+class AddTask:
+
+    def __init__(self):
+        
+
+    def addtask(self):
