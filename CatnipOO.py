@@ -4,6 +4,7 @@ from Keys import caesarKey
 from Keys import token
 from Keys import headers
 
+
 class Canvas:
 
     def __init__(self):
@@ -19,6 +20,7 @@ class Caesar:
 
     #def __init__(self):
 
+
     def pullterms(self):
         response = requests.get('http://api.asg.northwestern.edu/terms/', params=caesarKey)
         terms = response.json()
@@ -27,22 +29,24 @@ class Caesar:
     def pullschedule(self):
         classSch = []
         terms = self.pullterms()
-        caesarDetails = Canvas.getname()
-        for course in caesarDetails:
+        courseCode = Canvas.getname()
+
+        for course in courseCode:
             courses = caesarKey
+            caesarDetails = course.split('_')
             for i in terms:
                 # Converting both canvas and caesar term to same format
                 termYear, termQuarter = i[u'name'].split(' ')
                 termQuarter = termQuarter.upper()
-                courseYear = course[0][0:4]
-                courseQuarter = course[0][4:6]
+                courseYear = caesarDetails[0][0:4]
+                courseQuarter = caesarDetails[0][4:6]
                 # Check for term id
                 print courseYear, courseQuarter, termYear, termQuarter
                 if courseYear == termYear and termQuarter[0:2] == courseQuarter:
                     courses['term'] = i[u'id']
                     break
-            courses['subject'] = course[1]
-            courses['catalog_num'] = course[2]
+            courses['subject'] = caesarDetails[1]
+            courses['catalog_num'] = caesarDetails[2]
             response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
             counter = 0
             while counter == 0:
@@ -64,9 +68,22 @@ class Caesar:
                         break
         return classSch
 
+    def getSchedule(self):
+        #Pseudocode
+        if Database is None:
+            self.pullschedule()
+            copy into DB
+            return Schedule
+        else:
+            return Schedule
+
 class DataEntry:
 
-    def __init__(self):
+    def adddata(self):
+
+class DeleteTask:
+
+    def deletetask(self):
 
 
 class CheckCourse:
@@ -75,7 +92,7 @@ class CheckCourse:
 
 
 class CheckTerm:
-
+#Seems like it is useless now that I integrated it into Caesar.pullSchedule
     def checkterm(self):
 
 
@@ -90,7 +107,22 @@ class CalendarView:
 
 class AddTask:
 
-    def __init__(self):
-        
-
     def addtask(self):
+
+class Task:
+
+    def __init__(self, name, course_code, start_dt, end_dt, weightage, details, time_taken):
+        self.name = name
+        self.course_code = course_code
+        self.start_dt = start_dt
+        self.end_dt = end_dt
+        self.weightage = weightage
+        self.details = details
+        self.time_taken = time_taken
+
+class CompleteTask:
+
+    def completetask(self):
+        #change end_dt to current dt
+        #Stop stopwatch and record time taken
+
