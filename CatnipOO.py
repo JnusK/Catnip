@@ -120,6 +120,27 @@ class Task:
         self.details = details
         self.time_taken = time_taken
 
+    def getname(self):
+        return self.name
+
+    def getcourse(self):
+        return self.course_code
+
+    def getstartdt(self):
+        return self.start_dt
+
+    def getenddt(self):
+        return self.end_dt
+
+    def getweightage(self):
+        return self.weightage
+
+    def getdetails(self):
+        return self.details
+
+    def gettimetaken(self):
+        return self.time_taken
+
 class CompleteTask:
 
     def completetask(self):
