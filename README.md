@@ -10,6 +10,7 @@ Additional features to be included are as below:
 
 Tasks to be done:
   - Build UI
+  - Convert code to OOP
   - Build Calender/Database
   - Pull Class Schedule from CAESAR everytime courses change on Canvas
   - Pull Class Assignments from Canvas each time app start up or manual refresh or every week
