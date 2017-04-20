@@ -7,6 +7,7 @@ from Keys import headers
 
 classSch = []
 
+
 #===================API HEADERS + Course Names + Authentication====================
 params = (
     ('access_token', token),
@@ -35,6 +36,7 @@ for x in range(0, len(courseResponseList)):
     courseCode.append(c)
     ICourseMap = dict(zip(courseId, courseCode))
     CourseMap = {v: k for k, v in ICourseMap.iteritems()}
+    #print sampleCourse
     print CourseMap
     print courseId
     print sampleCourse['course_code']
@@ -42,6 +44,7 @@ for x in range(0, len(courseResponseList)):
     #Getting Course Details for Caesar
     details = c.split('_')
     caesarDetails.append(details)
+    print caesarDetails
 
 #===============Start of retrieving Class Schedule from CAESAR===========
 print caesarDetails
@@ -67,10 +70,13 @@ for course in caesarDetails:
             break
     courses['subject'] = course[1]
     courses['catalog_num'] = course[2]
+    courses['section'] = course[3][3:]
     response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
     print courses
+    classSch.append(response.json())
     print response.json()
     #Have to include this loop due to 395 series of classes which share many same classes
+    '''
     counter = 0
     while counter == 0:
         for i in response.json():
@@ -78,17 +84,17 @@ for course in caesarDetails:
             print tempClass
             if i[u'room'] is None:
                 print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[
-                    u'meeting_days'] + ' at ' + "Room not specified" + \
+                    u'meeting_days'] + ' at ' + "Room NOT Specified" + \
                       ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
             else:
                 print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[u'meeting_days'] + ' at ' + \
                     i[u'room'] + ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
-            a = raw_input('Is this the correct class?\r\nIf yes, enter y : ')
+            a = raw_input('Is this the correct class?\r\nIf yes, enter y, else type n: ')
             if a == 'y':
                 classSch.append(i)
                 counter = 1
                 break
-
+    '''
 
 print classSch
 
@@ -152,4 +158,4 @@ while choice != 'q' or choice != 'Q':
         #rawModResponse = modlist.text
         #modResponseList = json.loads(rawModResponse)
     choice = inputChoice()
-
+print "End"
