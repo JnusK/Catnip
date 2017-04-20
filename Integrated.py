@@ -48,15 +48,11 @@ for x in range(0, len(courseResponseList)):
 
 #===============Start of retrieving Class Schedule from CAESAR===========
 print caesarDetails
+#Pull terms from CAESAR to match the terms of courses from CANVAS
 response = requests.get('http://api.asg.northwestern.edu/terms/', params=caesarKey)
 terms = response.json()
 for course in caesarDetails:
-    courses = {
-        'key': 'BOGFWpQ90JmvNzrY',
-        # 'class_num' : '31902',
-        # 'term' : '4660',
-        # 'subject' : 'EECS'
-    }
+    courses = caesarKey
     for i in terms:
         #Converting both canvas and caesar term to same format
         termYear, termQuarter = i[u'name'].split(' ')
@@ -71,12 +67,13 @@ for course in caesarDetails:
     courses['subject'] = course[1]
     courses['catalog_num'] = course[2]
     courses['section'] = course[3][3:]
+    #API call uses 4 fields to narrow down search (term, subject, catalog_num and section)
     response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
     print courses
     classSch.append(response.json())
     print response.json()
-    #Have to include this loop due to 395 series of classes which share many same classes
     '''
+    #Have to include this loop due to 395 series of classes which share many same classes
     counter = 0
     while counter == 0:
         for i in response.json():

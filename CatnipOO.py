@@ -28,6 +28,7 @@ class Caesar:
 
     def pullschedule(self):
         classSch = []
+        # Pull terms from CAESAR to match the terms of courses from CANVAS
         terms = self.pullterms()
         courseCode = Canvas.getname()
 
@@ -47,7 +48,8 @@ class Caesar:
                     break
             courses['subject'] = caesarDetails[1]
             courses['catalog_num'] = caesarDetails[2]
-            courses['section'] = course[3][3:]
+            courses['section'] = caesarDetails[3][3:]
+            # API call uses 4 fields to narrow down search (term, subject, catalog_num and section)
             response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
             classSch.append(response.json())
         return classSch
