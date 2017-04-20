@@ -47,25 +47,9 @@ class Caesar:
                     break
             courses['subject'] = caesarDetails[1]
             courses['catalog_num'] = caesarDetails[2]
+            courses['section'] = course[3][3:]
             response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
-            counter = 0
-            while counter == 0:
-                for i in response.json():
-                    tempClass = i
-                    print tempClass
-                    if i[u'room'] is None:
-                        print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[
-                            u'meeting_days'] + ' at ' + "Room NOT Specified" + \
-                            ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
-                    else:
-                        print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[
-                            u'meeting_days'] + ' at ' + \
-                            i[u'room'] + ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
-                    a = raw_input('Is this the correct class?\r\nIf yes, enter y : ')
-                    if a == 'y':
-                        classSch.append(i)
-                        counter = 1
-                        break
+            classSch.append(response.json())
         return classSch
 
     def getSchedule(self):
