@@ -55,7 +55,13 @@ class PullCanvas:
     def storeassignemnts(self, assignments):
         with open('assignments.txt', 'w') as outfile:
             json.dump(assignments, outfile)
-
+    
+    def opencoursesjson(self):
+        with open('courses.txt') as json_data:
+            courses = json.load(json_data)
+        return courses
+           
+            
 class Caesar:
 
     #def __init__(self):
