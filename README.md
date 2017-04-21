@@ -21,6 +21,13 @@ Tasks to be done:
   - Pull Class Assignments from Canvas each time app start up or manual refresh or every week
   - Add ability for manual entry of tasks
   
+  
+  
+  
+  
+  CAESAR course API: http://developer.asg.northwestern.edu/docs/
+  
+  
 
 
 
