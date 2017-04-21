@@ -10,6 +10,7 @@ class PullCanvas:
         self.courseName1 = x
 
     def pullcourses(self):
+        #pull courses from Canvas 
         auth = requests.get('https://canvas.instructure.com/api/v1/courses', params=params)
         r = requests.get('https://canvas.instructure.com/api/v1/users/self/favorites/courses', headers=headers)
         if auth != 200 or "200"
