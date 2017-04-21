@@ -107,7 +107,7 @@ class Caesar:
     def getSchedule(self):
         if os.path.exists("./classSch.txt") == False:
             self.pullschedule()
-        with open('classSch.json') as json_data:
+        with open('classSch.txt') as json_data:
             schedule = json.load(json_data)
         return schedule
 
