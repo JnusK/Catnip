@@ -35,7 +35,7 @@ class PullCanvas:
     def pullassignments(self):
         #pull assignments
         
-    def getName(self):
+    def getname(self):
         #get name of courses from JSON file
         return courseCode
 
@@ -65,7 +65,7 @@ class Caesar:
         classSch = []
         # Pull terms from CAESAR to match the terms of courses from CANVAS
         terms = self.pullterms()
-        courseCode = Canvas.getname()
+        courseCode = PullCanvas.getname()
 
         for course in courseCode:
             courses = caesarKey
