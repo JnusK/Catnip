@@ -69,9 +69,14 @@ for course in caesarDetails:
     courses['section'] = course[3][3:]
     #API call uses 4 fields to narrow down search (term, subject, catalog_num and section)
     response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
-    print courses
-    classSch.append(response.json())
-    print response.json()
+    cls = response.json()
+    for ele in cls:
+        del ele[u'topic']
+        del ele[u'seats']
+        del ele[u'course_id']
+        del ele[u'class_num']
+        del ele[u'id']
+    classSch.append(cls)
     '''
     #Have to include this loop due to 395 series of classes which share many same classes
     counter = 0
