@@ -9,7 +9,7 @@ caesarKey = {
 }
 
 #===================API HEADERS + Course Names + Authentication====================
-token = '1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s';
+token = '1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s'
 params = (
     ('access_token', token),
 )
@@ -158,3 +158,4 @@ while choice != 'q' or choice != 'Q':
         #modResponseList = json.loads(rawModResponse)
     choice = inputChoice()
 
+print("ehh")

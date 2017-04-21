@@ -3,7 +3,7 @@ import json
 from collections import namedtuple
 
 #===================API HEADERS + Course Names + Authentication====================
-token = ''; #use your own token
+token = '1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s';
 params = (
     ('access_token', token),
 )
@@ -28,8 +28,8 @@ for x in range(0, len(courseResponseList)):
     courseId.append(d)
     courseCode.append(c)
     ICourseMap = dict(zip(courseId, courseCode))
-    CourseMap = {v: k for k, v in ICourseMap.iteritems()}
-    #print CourseMap
+    CourseMap = {v: k for k, v in ICourseMap.iteritems()} #flips coursemap
+    print CourseMap.keys()
     #print courseId
     #print sampleCourse['course_code']
 
@@ -66,6 +66,41 @@ print len(asmtResponseList)
 asmtId = []
 asmtName = []
 
+data = asmtResponseList
+for element in data:
+        del element['muted']
+        del element['due_date_required']
+        del element['submissions_download_url']
+        del element['locked_for_user']
+        del element['in_closed_grading_period']
+        del element['html_url']
+        del element['intra_group_peer_reviews']
+        del element['secure_params']
+        del element['submission_types']
+        del element['created_at']
+        del element['updated_at']
+        del element['grade_group_students_individually']
+        del element['anonymous_peer_reviews']
+        del element['post_to_sis']
+        del element['automatic_peer_reviews']
+        del element['group_category_id']
+        del element['omit_from_final_grade']
+        del element['lock_at']
+        del element['unlock_at']
+        del element['position']
+        del element['moderated_grading']
+        del element['only_visible_to_overrides']
+        del element['peer_reviews']
+        del element['grading_standard_id']
+        del element['assignment_group_id']
+        del element['max_name_length']
+        del element['published']
+        del element['description']
+
+print data
+with open('assignments.txt', 'w') as outfile:
+    json.dump(data, outfile)
+
 for x in range(0, len(asmtResponseList)):
     sampleAsmt = asmtResponseList[x]
     a = sampleAsmt['id']
@@ -73,6 +108,8 @@ for x in range(0, len(asmtResponseList)):
     asmtId.append(a)
     b = sampleAsmt['name']
     asmtName.append(b)
+
+
 
 for i in range(0, len(asmtName)):
     print asmtName[i]
