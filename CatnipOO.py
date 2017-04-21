@@ -50,6 +50,10 @@ class PullCanvas:
     def storecourses(self, courses):
         with open('courses.txt', 'w') as outfile:
             json.dump(courses, outfile)
+   
+    def storeassignemnts(self, assignments):
+        with open('assignments.txt', 'w') as outfile:
+            json.dump(assignments, outfile)
 
 class Caesar:
 
@@ -100,9 +104,8 @@ class Caesar:
 
     def getSchedule(self):
         #Pseudocode
-        if Database is None:
+        if os.path.exists("./classSch.txt") == False:
             self.pullschedule()
-            #copy into DB
             return Schedule
         else:
             return Schedule
@@ -116,15 +119,6 @@ class DeleteTask:
 
     def deletetask(self):
         pass
-
-class CheckCourse:
-
-    def checkcourses(self):
-
-
-class CheckTerm:
-#Seems like it is useless now that I integrated it into Caesar.pullSchedule
-    def checkterm(self):
 
 
 class PriorityView:
