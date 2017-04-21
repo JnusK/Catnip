@@ -1,0 +1,33 @@
+Assignment Object Data
+"id"
+"description"
+"due_at"
+"points_possible"
+"course_id"
+"name"
+"submission_types"
+"has_submitted_submissions"
+"is_quiz_assignment"
+
+Course Object Data
+"id"
+"name"
+
+Caesar Term Data
+"id"
+"name"
+"start_date"
+"end_date"
+
+Caesar Course Data
+"term"   #name of term
+"subject"
+"instructor"
+"room"
+"catalog_num"
+"meeting_days"
+"start_time"
+"end_time"
+"title"
+"component"
+
