@@ -51,7 +51,15 @@ class Caesar:
             courses['section'] = caesarDetails[3][3:]
             # API call uses 4 fields to narrow down search (term, subject, catalog_num and section)
             response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
-            classSch.append(response.json())
+            cls = response.json()
+            #Removing keys not needed from dictionary of course
+            for ele in cls:
+                del ele[u'topic']
+                del ele[u'seats']
+                del ele[u'course_id']
+                del ele[u'class_num']
+                del ele[u'id']
+            classSch.append(cls)
         return classSch
 
     def getSchedule(self):
