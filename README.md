@@ -25,7 +25,7 @@ Tasks to be done:
   
   
   
-  CAESAR course API: http://developer.asg.northwestern.edu/docs/
+  CAESAR course API documentation: http://developer.asg.northwestern.edu/docs/
   
   
 
