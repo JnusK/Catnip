@@ -33,12 +33,18 @@ class PullCanvas:
 
 
     def pullassignments(self):
-
+        #pull assignments
+        
     def getName(self):
-        #compare courses in JSON with newly pulled courses to see if there is any changes
+        #get name of courses from JSON file
         return courseCode
 
     def comparecourses(self):
+        #compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
+        return change
+    
+    def compareassignment(self):
+        #compare assignments in JSON dile with newly pulled assignments and return a boolean 
         return change
 
 class Caesar:
