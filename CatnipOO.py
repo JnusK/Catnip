@@ -105,12 +105,11 @@ class Caesar:
             json.dump(cSch, outfile)
 
     def getSchedule(self):
-        #Pseudocode
         if os.path.exists("./classSch.txt") == False:
             self.pullschedule()
-            return Schedule
-        else:
-            return Schedule
+        with open('strings.json') as json_data:
+            schedule = json.load(json_data)
+        return schedule
 
 class DataEntry:
 
