@@ -10,7 +10,7 @@ class PullCanvas:
         self.courseName1 = x
 
     def pullcourses(self):
-        #pull courses from Canvas 
+        #pull courses from Canvas and return list of courses, do not store to JSON in this method 
         auth = requests.get('https://canvas.instructure.com/api/v1/courses', params=params)
         r = requests.get('https://canvas.instructure.com/api/v1/users/self/favorites/courses', headers=headers)
         if auth != 200 or "200"
@@ -32,7 +32,6 @@ class PullCanvas:
 
         print CourseMap.keys()
 
-
     def pullassignments(self):
         #pull assignments
         
@@ -47,6 +46,10 @@ class PullCanvas:
     def compareassignment(self):
         #compare assignments in JSON dile with newly pulled assignments and return a boolean 
         return change
+    
+    def storecourses(self, courses):
+        with open('courses.txt', 'w') as outfile:
+            json.dump(courses, outfile)
 
 class Caesar:
 
