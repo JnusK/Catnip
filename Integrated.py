@@ -1,5 +1,6 @@
 import requests
 import json
+import itertools
 from collections import namedtuple
 from Keys import caesarKey
 from Keys import token
@@ -9,8 +10,6 @@ classSch = []
 
 
 #===================API HEADERS + Course Names + Authentication====================
-
-token = '1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s'
 params = (
     ('access_token', token),
 )
@@ -72,6 +71,7 @@ for course in caesarDetails:
     #API call uses 4 fields to narrow down search (term, subject, catalog_num and section)
     response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
     cls = response.json()
+    #Removing keys not needed from dictionary of course
     for ele in cls:
         del ele[u'topic']
         del ele[u'seats']
@@ -79,7 +79,15 @@ for course in caesarDetails:
         del ele[u'class_num']
         del ele[u'id']
     classSch.append(cls)
-    '''
+cSch = list(itertools.chain.from_iterable(classSch))
+print cSch
+with open('classSch.txt', 'w') as outfile:
+    json.dump(cSch, outfile)
+with open('classSch.txt') as json_data:
+    schedule = json.load(json_data)
+print schedule
+
+'''
     #Have to include this loop due to 395 series of classes which share many same classes
     counter = 0
     while counter == 0:
@@ -100,7 +108,7 @@ for course in caesarDetails:
                 break
     '''
 
-print classSch
+
 
 #====================Main Menu==================================
 def inputChoice():
@@ -162,5 +170,4 @@ while choice != 'q' or choice != 'Q':
         #rawModResponse = modlist.text
         #modResponseList = json.loads(rawModResponse)
     choice = inputChoice()
-
 print "End"
