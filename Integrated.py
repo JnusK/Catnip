@@ -1,21 +1,19 @@
 import requests
 import json
 from collections import namedtuple
+from Keys import caesarKey
+from Keys import token
+from Keys import headers
 
 classSch = []
 
-caesarKey = {
-    'key' : 'BOGFWpQ90JmvNzrY',
-}
 
 #===================API HEADERS + Course Names + Authentication====================
+
 token = '1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s'
 params = (
     ('access_token', token),
 )
-headers = {
-    'Authorization': 'Bearer 1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s',
-}
 
 r = requests.get('https://canvas.instructure.com/api/v1/users/self/favorites/courses', headers=headers)
 auth = requests.get('https://canvas.instructure.com/api/v1/courses', params=params)
@@ -40,6 +38,7 @@ for x in range(0, len(courseResponseList)):
     courseCode.append(c)
     ICourseMap = dict(zip(courseId, courseCode))
     CourseMap = {v: k for k, v in ICourseMap.iteritems()}
+    #print sampleCourse
     print CourseMap
     print courseId
     print sampleCourse['course_code']
@@ -47,18 +46,15 @@ for x in range(0, len(courseResponseList)):
     #Getting Course Details for Caesar
     details = c.split('_')
     caesarDetails.append(details)
+    print caesarDetails
 
 #===============Start of retrieving Class Schedule from CAESAR===========
 print caesarDetails
+#Pull terms from CAESAR to match the terms of courses from CANVAS
 response = requests.get('http://api.asg.northwestern.edu/terms/', params=caesarKey)
 terms = response.json()
 for course in caesarDetails:
-    courses = {
-        'key': 'BOGFWpQ90JmvNzrY',
-        # 'class_num' : '31902',
-        # 'term' : '4660',
-        # 'subject' : 'EECS'
-    }
+    courses = caesarKey
     for i in terms:
         #Converting both canvas and caesar term to same format
         termYear, termQuarter = i[u'name'].split(' ')
@@ -72,9 +68,18 @@ for course in caesarDetails:
             break
     courses['subject'] = course[1]
     courses['catalog_num'] = course[2]
+    courses['section'] = course[3][3:]
+    #API call uses 4 fields to narrow down search (term, subject, catalog_num and section)
     response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
-    print courses
-    print response.json()
+    cls = response.json()
+    for ele in cls:
+        del ele[u'topic']
+        del ele[u'seats']
+        del ele[u'course_id']
+        del ele[u'class_num']
+        del ele[u'id']
+    classSch.append(cls)
+    '''
     #Have to include this loop due to 395 series of classes which share many same classes
     counter = 0
     while counter == 0:
@@ -83,17 +88,17 @@ for course in caesarDetails:
             print tempClass
             if i[u'room'] is None:
                 print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[
-                    u'meeting_days'] + ' at ' + "Room not specified" + \
+                    u'meeting_days'] + ' at ' + "Room NOT Specified" + \
                       ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
             else:
                 print i[u'subject'] + ' ' + i[u'catalog_num'] + ' ' + i[u'section'] + ' : ' + i[u'meeting_days'] + ' at ' + \
                     i[u'room'] + ' from ' + i[u'start_time'] + ' to ' + i[u'end_time']
-            a = raw_input('Is this the correct class?\r\nIf yes, enter y : ')
+            a = raw_input('Is this the correct class?\r\nIf yes, enter y, else type n: ')
             if a == 'y':
                 classSch.append(i)
                 counter = 1
                 break
-
+    '''
 
 print classSch
 
@@ -158,4 +163,4 @@ while choice != 'q' or choice != 'Q':
         #modResponseList = json.loads(rawModResponse)
     choice = inputChoice()
 
-print("ehh")
+print "End"

@@ -1,15 +1,15 @@
 import requests
 import json
 from collections import namedtuple
+from Keys import header
+from Keys import token
 
 #===================API HEADERS + Course Names + Authentication====================
 token = '1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s';
+
 params = (
     ('access_token', token),
 )
-headers = {
-    'Authorization': 'Bearer 1876~4zGcmCF0s4shtdLiasakdKVRn6bcZGl6Tkr42HqsuHMwh0wBF8Cf8vZMCyYyyN3s',
-}
 
 r = requests.get('https://canvas.instructure.com/api/v1/users/self/favorites/courses', headers=headers)
 auth = requests.get('https://canvas.instructure.com/api/v1/courses', params=params)

@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+from Keys import caesarKey
 
 classSch = []
 
@@ -12,15 +13,12 @@ def f(x):
         'd': 4
     }.get(x, 9)
 '''
+
 courses = {
-    'key' : 'BOGFWpQ90JmvNzrY',
+    'key' : caesarKey['key'],
     #'class_num' : '31902',
     #'term' : '4660',
     #'subject' : 'EECS'
-}
-
-key = {
-    'key' : 'BOGFWpQ90JmvNzrY',
 }
 
 #response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
@@ -31,7 +29,7 @@ def inputChoice():
     choice = raw_input('Choice : ')
     return choice
 
-response = requests.get('http://api.asg.northwestern.edu/terms/', params=key)
+response = requests.get('http://api.asg.northwestern.edu/terms/', params=caesarKey)
 #response = requests.get('http://api.asg.northwestern.edu/terms/', params=courses['key'])
 print response.url
 curDate = datetime.now()
