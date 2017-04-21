@@ -1,7 +1,6 @@
 import requests
 import json
 from collections import namedtuple
-from Keys import header
 from Keys import token
 
 #===================API HEADERS + Course Names + Authentication====================
@@ -29,10 +28,10 @@ for x in range(0, len(courseResponseList)):
     courseCode.append(c)
     ICourseMap = dict(zip(courseId, courseCode))
     CourseMap = {v: k for k, v in ICourseMap.iteritems()} #flips coursemap
-    print CourseMap.keys()
+
     #print courseId
     #print sampleCourse['course_code']
-
+print CourseMap
 
 #=================User Input Class====================
 
