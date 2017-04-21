@@ -6,15 +6,19 @@ from Keys import caesarKey
 from Keys import token
 from Keys import headers
 
+
 class PullCanvas:
     def __init__(self):
         self.courseName1 = x
 
     def pullcourses(self):
-        #pull courses from Canvas and return list of courses, do not store to JSON in this method 
+        # pull courses from Canvas and return list of courses, do not store to JSON in this method
+        params = {
+            ('access_token', token),
+        }
         auth = requests.get('https://canvas.instructure.com/api/v1/courses', params=params)
         r = requests.get('https://canvas.instructure.com/api/v1/users/self/favorites/courses', headers=headers)
-        if auth != 200 or "200"
+        if auth != 200 or "200":
             raise RuntimeError("Canvas Authorization Failed")
         rawCourseResponse = str(r.text)
         courseResponseList = json.loads(rawCourseResponse)
@@ -30,41 +34,42 @@ class PullCanvas:
             courseCode.append(c)
             ICourseMap = dict(zip(courseId, courseCode))
             CourseMap = {v: k for k, v in ICourseMap.iteritems()}
-
-        print CourseMap.keys()
+        return CourseMap
 
     def pullassignments(self):
-        #pull assignments
-        
+        # pull assignments
+        pass
+
     def getname(self):
-        #get name of courses from JSON file
+        # get name of courses from JSON file
         return courseCode
 
-    def comparecourses(self):
-        #compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
+    def comparecourses(self, newCourses):
+        # compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
+        oldCourses = self.opencoursesjson()
         return change
-    
-    def compareassignment(self):
-        #compare assignments in JSON dile with newly pulled assignments and return a boolean 
+
+    def compareassignment(self, newAssignment):
+        # compare assignments in JSON dile with newly pulled assignments and return a boolean
+
+
         return change
-    
+
     def storecourses(self, courses):
         with open('courses.txt', 'w') as outfile:
             json.dump(courses, outfile)
-   
+
     def storeassignemnts(self, assignments):
         with open('assignments.txt', 'w') as outfile:
             json.dump(assignments, outfile)
-    
+
     def opencoursesjson(self):
         with open('courses.txt') as json_data:
             courses = json.load(json_data)
         return courses
-           
-            
-class Caesar:
 
-    #def __init__(self):
+class Caesar:
+    # def __init__(self):
 
 
     def pullterms(self):
@@ -98,7 +103,7 @@ class Caesar:
             # API call uses 4 fields to narrow down search (term, subject, catalog_num and section)
             response = requests.get('http://api.asg.northwestern.edu/courses/', params=courses)
             cls = response.json()
-            #Removing keys not needed from dictionary of course
+            # Removing keys not needed from dictionary of course
             for ele in cls:
                 del ele[u'topic']
                 del ele[u'seats']
@@ -106,6 +111,7 @@ class Caesar:
                 del ele[u'class_num']
                 del ele[u'id']
             classSch.append(cls)
+        #dumping class schedule to JSON file
         cSch = list(itertools.chain.from_iterable(classSch))
         with open('classSch.txt', 'w') as outfile:
             json.dump(cSch, outfile)
@@ -117,13 +123,13 @@ class Caesar:
             schedule = json.load(json_data)
         return schedule
 
-class DataEntry:
 
+class DataEntry:
     def adddata(self):
         pass
-    
-class DeleteTask:
 
+
+class DeleteTask:
     def deletetask(self):
         pass
 
@@ -138,11 +144,10 @@ class CalendarView:
 
 
 class AddTask:
-
     def addtask(self):
+        pass
 
 class Task:
-
     def __init__(self, name, course_code, start_dt, end_dt, weightage, details, time_taken):
         self.name = name
         self.course_code = course_code
@@ -173,8 +178,15 @@ class Task:
     def gettimetaken(self):
         return self.time_taken
 
-class CompleteTask:
 
+class CompleteTask:
     def completetask(self):
-        #change end_dt to current dt
-        #Stop stopwatch and record time taken
+        # change end_dt to current dt
+        # Stop stopwatch and record time taken
+        pass
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
