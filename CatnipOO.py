@@ -100,6 +100,7 @@ class Caesar:
                 del ele[u'class_num']
                 del ele[u'id']
             classSch.append(cls)
+        cSch = list(itertools.chain.from_iterable(classSch))
         with open('classSch.txt', 'w') as outfile:
             json.dump(cSch, outfile)
 
