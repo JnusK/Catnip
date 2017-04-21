@@ -1,5 +1,6 @@
 import requests
 import json
+import itertools
 from Keys import caesarKey
 from Keys import token
 from Keys import headers
@@ -81,13 +82,14 @@ class Caesar:
                 del ele[u'class_num']
                 del ele[u'id']
             classSch.append(cls)
-        return classSch
+        with open('classSch.txt', 'w') as outfile:
+            json.dump(cSch, outfile)
 
     def getSchedule(self):
         #Pseudocode
         if Database is None:
             self.pullschedule()
-            copy into DB
+            #copy into DB
             return Schedule
         else:
             return Schedule
@@ -95,11 +97,12 @@ class Caesar:
 class DataEntry:
 
     def adddata(self):
-
+        pass
+    
 class DeleteTask:
 
     def deletetask(self):
-
+        pass
 
 class CheckCourse:
 
