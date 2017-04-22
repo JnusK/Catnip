@@ -87,7 +87,7 @@ class PullCanvas:
 
     def comparecourses(self, newCourses):
         # compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
-        oldCourses = self.opencoursesjson()
+        oldCourses = OpenJSON.openjson("courses.json")
         return change
 
     def compareassignment(self, newAssignment):
@@ -101,11 +101,6 @@ class PullCanvas:
     def storeAssignments(self, assignments):
         with open('assignments.json', 'w') as outfile:
             json.dump(assignments, outfile)
-
-    def openCoursesJson(self):
-        with open('courses.json') as json_data:
-            courses = json.load(json_data)
-        return courses
 
 class Caesar:
     # def __init__(self):
@@ -178,7 +173,12 @@ class CheckCourse:
     def checkcourses(self):
         pass
 
-
+class OpenJSON:
+    def openjson(self, fileName):
+        with open(fileName) as json_data:
+            requestedFile = json.load(json_data)
+        return requestedFile
+    
 class CheckTerm:
 #Seems like it is useless now that I integrated it into Caesar.pullSchedule
     def checkterm(self):
