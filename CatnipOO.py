@@ -91,7 +91,7 @@ class PullCanvas:
         return change
 
     def compareassignment(self, newAssignment):
-        # compare assignments in JSON dile with newly pulled assignments and return a boolean
+        #compare assignments in JSON dile with newly pulled assignments and return a boolean
         return change
 
     def storeCourses(self, courses):
