@@ -2,6 +2,7 @@ import requests
 import json
 import itertools
 import os.path
+import datetime
 from Keys import caesarKey
 from Keys import token
 from Keys import headers
@@ -31,8 +32,8 @@ class PullCanvas:
             courseCode.append(c)
             ICourseMap = dict(zip(courseId, courseCode))
             CourseMap = {v: k for k, v in ICourseMap.iteritems()}
-            
-        ChangeJSON.writejson("lastPull.json", datetime.datetime)
+
+        ChangeJSON().writejson("lastPull.json", datetime.datetime)
 
         return CourseMap
 
@@ -86,6 +87,7 @@ class PullCanvas:
         return tempList
 
     def getcoursecode(self):
+        # return course_code for CAESAR manipulation
         courses = ChangeJSON().openjson("courses.json")
         courseCode = []
         for course in courses:
@@ -95,36 +97,34 @@ class PullCanvas:
     def comparecourses(self, newCourses):
         # compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
         oldCourses = ChangeJSON().openjson("courses.json")
-        newCourses = pullcourses()
 
         if len(oldCourses) != len(newCourses):
-            return true
+            return True
         else:
             for i in oldCourses:
                 for j in newCourses:
                     if i['courseId'] != j['courseId']:
-                        return true
-        return false
+                        return True
+        return False
 
-    def compareassignment(self, newAssignment):
-        # compare assignments in JSON dile with newly pulled assignments and return a boolean
+    def compareassignment(self, newAssignments):
+        # compare assignments in JSON file with newly pulled assignments and return a boolean
         oldAssignments = ChangeJSON().openjson("assignments.json")
-        newAssignments = pullassignments()
 
         if len(oldAssignments) != len(newAssignments):
-            return true
+            return True
         else:
             for i in oldAssignments:
                 for j in newAssignments:
                     if i['id'] != j['id']:
-                        return true
-        return false
+                        return True
+        return False
+
 
 class Caesar:
-    # def __init__(self):
-
 
     def pullterms(self):
+        #pull terms information from CAESAR
         response = requests.get('http://api.asg.northwestern.edu/terms/', params=caesarKey)
         terms = response.json()
         return terms
@@ -173,13 +173,11 @@ class Caesar:
         schedule = ChangeJSON().openjson("classSch.json")
         return schedule
 
-class DataEntry:
-    def adddata(self):
-        pass
 
 class DeleteTask:
     def deletetask(self):
         pass
+
 
 class ChangeJSON:
     def openjson(self, fileName):
@@ -189,6 +187,10 @@ class ChangeJSON:
 
     def writejson(self, fileName, list):
         with open(fileName, 'w') as outfile:
+            json.dump(list, outfile)
+
+    def appendjson(selfself, fileName, list):
+        with open(fileName, 'a') as outfile:
             json.dump(list, outfile)
 
 class PriorityView:
@@ -204,11 +206,13 @@ class CalendarView:
 
 
 class AddTask:
+
     def addtask(self):
         pass
 
 
 class Task:
+
     def __init__(self, name, course_code, start_dt, end_dt, weightage, details, time_taken):
         self.name = name
         self.course_code = course_code
@@ -238,7 +242,7 @@ class Task:
 
     def gettimetaken(self):
         return self.time_taken
-    
+
     def completetask(self):
         # change end_dt to current dt
         # Stop stopwatch and record time taken
@@ -246,7 +250,14 @@ class Task:
 
 
 def main():
-    pass
+    if os.path.exists("./courses.json") == False:
+        courses = PullCanvas().pullcourses()
+        ChangeJSON().writejson("courses.json", courses)
+    if os.path.exists("./assignments.json") == False:
+        assignments = PullCanvas().pullassignments()
+        ChangeJSON().writejson("assignments.json", assignments)
+    if os.path.exists("./classSch.json") == False:
+        Caesar().pullschedule()
 
 
 if __name__ == '__main__':
