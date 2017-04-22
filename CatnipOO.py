@@ -8,7 +8,6 @@ from Keys import headers
 
 
 class PullCanvas:
-
     def pullcourses(self):
         # pull courses from Canvas and return list of courses, do not store to JSON in this method
         params = {
@@ -38,46 +37,48 @@ class PullCanvas:
     def pullassignments(self):
         # pull assignments
         asmtList = []
-        tempList=[]
+        tempList = []
 
         for x in range(0, len(courseResponseList)):
             nameOfCourse = str(courseId[x])
             print nameOfCourse
-            asmt = requests.get('https://canvas.instructure.com/api/v1/courses/'+ nameOfCourse +'/assignments/?per_page=200', headers=headers)
+            asmt = requests.get(
+                'https://canvas.instructure.com/api/v1/courses/' + nameOfCourse + '/assignments/?per_page=200',
+                headers=headers)
             rawAsmtResponse = asmt.text
             asmtResponseList = json.loads(rawAsmtResponse)
             data = asmtResponseList
             for element in data:
-                    del element['muted']
-                    del element['due_date_required']
-                    del element['submissions_download_url']
-                    del element['locked_for_user']
-                    del element['in_closed_grading_period']
-                    del element['html_url']
-                    del element['intra_group_peer_reviews']
-                    del element['secure_params']
-                    del element['submission_types']
-                    del element['created_at']
-                    del element['updated_at']
-                    del element['grade_group_students_individually']
-                    del element['anonymous_peer_reviews']
-                    del element['post_to_sis']
-                    del element['automatic_peer_reviews']
-                    del element['group_category_id']
-                    del element['omit_from_final_grade']
-                    del element['lock_at']
-                    del element['unlock_at']
-                    del element['position']
-                    del element['moderated_grading']
-                    del element['only_visible_to_overrides']
-                    del element['peer_reviews']
-                    del element['grading_standard_id']
-                    del element['assignment_group_id']
-                    del element['max_name_length']
-                    del element['published']
-                    del element['description']
+                del element['muted']
+                del element['due_date_required']
+                del element['submissions_download_url']
+                del element['locked_for_user']
+                del element['in_closed_grading_period']
+                del element['html_url']
+                del element['intra_group_peer_reviews']
+                del element['secure_params']
+                del element['submission_types']
+                del element['created_at']
+                del element['updated_at']
+                del element['grade_group_students_individually']
+                del element['anonymous_peer_reviews']
+                del element['post_to_sis']
+                del element['automatic_peer_reviews']
+                del element['group_category_id']
+                del element['omit_from_final_grade']
+                del element['lock_at']
+                del element['unlock_at']
+                del element['position']
+                del element['moderated_grading']
+                del element['only_visible_to_overrides']
+                del element['peer_reviews']
+                del element['grading_standard_id']
+                del element['assignment_group_id']
+                del element['max_name_length']
+                del element['published']
+                del element['description']
 
-                    tempList.append(element)
+                tempList.append(element)
 
         print tempList
         return tempList
@@ -94,13 +95,7 @@ class PullCanvas:
         # compare assignments in JSON dile with newly pulled assignments and return a boolean
         return change
 
-    def storeCourses(self, courses):
-        with open('courses.json', 'w') as outfile:
-            json.dump(courses, outfile)
 
-    def storeAssignments(self, assignments):
-        with open('assignments.json', 'w') as outfile:
-            json.dump(assignments, outfile)
 
 class Caesar:
     # def __init__(self):
@@ -145,10 +140,9 @@ class Caesar:
                 del ele[u'class_num']
                 del ele[u'id']
             classSch.append(cls)
-        #dumping class schedule to JSON file
+        # dumping class schedule to JSON file
         cSch = list(itertools.chain.from_iterable(classSch))
-        with open('classSch.txt', 'w') as outfile:
-            json.dump(cSch, outfile)
+        ChangeJSON.writejson("classSch.json", cSch)
 
     def getSchedule(self):
         if os.path.exists("./classSch.txt") == False:
@@ -169,18 +163,23 @@ class DeleteTask:
 
 
 class CheckCourse:
-
     def checkcourses(self):
         pass
 
-class OpenJSON:
+
+class ChangeJSON:
     def openjson(self, fileName):
         with open(fileName) as json_data:
             requestedFile = json.load(json_data)
         return requestedFile
-    
+
+    def writejson(self, fileName, list):
+        with open(fileName, 'w') as outfile:
+            json.dump(list, outfile)
+
+
 class CheckTerm:
-#Seems like it is useless now that I integrated it into Caesar.pullSchedule
+    # Seems like it is useless now that I integrated it into Caesar.pullSchedule
     def checkterm(self):
         pass
 
@@ -200,6 +199,7 @@ class CalendarView:
 class AddTask:
     def addtask(self):
         pass
+
 
 class Task:
     def __init__(self, name, course_code, start_dt, end_dt, weightage, details, time_taken):
@@ -239,8 +239,10 @@ class CompleteTask:
         # Stop stopwatch and record time taken
         pass
 
+
 def main():
     pass
+
 
 if __name__ == '__main__':
     main()
