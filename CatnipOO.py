@@ -205,6 +205,10 @@ class ChangeJSON:
         with open(fileName, 'w') as outfile:
             json.dump(list, outfile)
 
+    def appendjson(selfself, fileName, list):
+        with open(fileName, 'a') as outfile:
+            json.dump(list, outfile)
+
 
 class CheckTerm:
     # Seems like it is useless now that I integrated it into Caesar.pullSchedule
@@ -269,7 +273,14 @@ class CompleteTask:
 
 
 def main():
-    pass
+    if os.path.exists("./courses.json") == False:
+        courses = PullCanvas().pullcourses()
+        ChangeJSON().writejson("courses.json", courses)
+    if os.path.exists("./assignments.json") == False:
+        assignments = PullCanvas().pullassignments()
+        ChangeJSON().writejson("assignments.json", assignments)
+    if os.path.exists("./classSch.json") == False:
+        Caesar().pullschedule()
 
 
 if __name__ == '__main__':
