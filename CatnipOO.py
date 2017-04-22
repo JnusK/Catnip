@@ -2,10 +2,11 @@ import requests
 import json
 import itertools
 import os.path
-import datetime
+from pprint import pprint
 from Keys import caesarKey
 from Keys import token
 from Keys import headers
+from datetime import datetime
 
 
 class PullCanvas:
@@ -33,8 +34,8 @@ class PullCanvas:
             ICourseMap = dict(zip(courseId, courseCode))
             CourseMap = {v: k for k, v in ICourseMap.iteritems()}
 
-        ChangeJSON().writejson("lastPull.json", datetime.datetime)
 
+        ChangeJSON.writejson("lastPull.json", datetime.datetime)
         return CourseMap
 
     def pullassignments(self):
@@ -42,7 +43,13 @@ class PullCanvas:
         asmtList = []
         tempList = []
 
-        for x in range(0, len(courseResponseList)):
+        CourseMap = pullcourses()
+        courseId = []
+        for key in CourseMap):
+            courseId.append(key)
+
+
+        for x in range(0, len(courseId)):
             nameOfCourse = str(courseId[x])
             print nameOfCourse
             asmt = requests.get(
@@ -83,48 +90,47 @@ class PullCanvas:
 
                 tempList.append(element)
 
-        print tempList
+        #print tempList
         return tempList
 
-    def getcoursecode(self):
-        # return course_code for CAESAR manipulation
-        courses = ChangeJSON().openjson("courses.json")
-        courseCode = []
-        for course in courses:
-            courseCode.append(course[u'course_code'])
+    def getName(self):
         return courseCode
 
     def comparecourses(self, newCourses):
         # compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
         oldCourses = ChangeJSON().openjson("courses.json")
+        newCourses = pullcourses()
 
         if len(oldCourses) != len(newCourses):
-            return True
+            return true
         else:
             for i in oldCourses:
                 for j in newCourses:
                     if i['courseId'] != j['courseId']:
-                        return True
-        return False
+                        return true
+        return false
 
-    def compareassignment(self, newAssignments):
-        # compare assignments in JSON file with newly pulled assignments and return a boolean
+    def compareassignment(self, newAssignment):
+        # compare assignments in JSON dile with newly pulled assignments and return a boolean
         oldAssignments = ChangeJSON().openjson("assignments.json")
+        newAssignments = pullassignments()
 
         if len(oldAssignments) != len(newAssignments):
-            return True
+            return true
         else:
             for i in oldAssignments:
                 for j in newAssignments:
                     if i['id'] != j['id']:
-                        return True
-        return False
+                        return true
+        return false
+
 
 
 class Caesar:
+    # def __init__(self):
+
 
     def pullterms(self):
-        #pull terms information from CAESAR
         response = requests.get('http://api.asg.northwestern.edu/terms/', params=caesarKey)
         terms = response.json()
         return terms
@@ -133,7 +139,7 @@ class Caesar:
         classSch = []
         # Pull terms from CAESAR to match the terms of courses from CANVAS
         terms = self.pullterms()
-        courseCode = PullCanvas().getcoursecode()
+        courseCode = PullCanvas().getname()
 
         for course in courseCode:
             courses = caesarKey
@@ -174,8 +180,18 @@ class Caesar:
         return schedule
 
 
+class DataEntry:
+    def adddata(self):
+        pass
+
+
 class DeleteTask:
     def deletetask(self):
+        pass
+
+
+class CheckCourse:
+    def checkcourses(self):
         pass
 
 
@@ -189,9 +205,12 @@ class ChangeJSON:
         with open(fileName, 'w') as outfile:
             json.dump(list, outfile)
 
-    def appendjson(selfself, fileName, list):
-        with open(fileName, 'a') as outfile:
-            json.dump(list, outfile)
+
+class CheckTerm:
+    # Seems like it is useless now that I integrated it into Caesar.pullSchedule
+    def checkterm(self):
+        pass
+
 
 class PriorityView:
     pass
@@ -206,13 +225,11 @@ class CalendarView:
 
 
 class AddTask:
-
     def addtask(self):
         pass
 
 
 class Task:
-
     def __init__(self, name, course_code, start_dt, end_dt, weightage, details, time_taken):
         self.name = name
         self.course_code = course_code
@@ -243,6 +260,8 @@ class Task:
     def gettimetaken(self):
         return self.time_taken
 
+
+class CompleteTask:
     def completetask(self):
         # change end_dt to current dt
         # Stop stopwatch and record time taken
@@ -250,14 +269,7 @@ class Task:
 
 
 def main():
-    if os.path.exists("./courses.json") == False:
-        courses = PullCanvas().pullcourses()
-        ChangeJSON().writejson("courses.json", courses)
-    if os.path.exists("./assignments.json") == False:
-        assignments = PullCanvas().pullassignments()
-        ChangeJSON().writejson("assignments.json", assignments)
-    if os.path.exists("./classSch.json") == False:
-        Caesar().pullschedule()
+    pass
 
 
 if __name__ == '__main__':
