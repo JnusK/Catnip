@@ -50,55 +50,69 @@ def let_user_pick(options):
     return None
 
 #===================Canvas API stuff=====================
-nameOfCourse = str(let_user_pick(courseCode))
-print nameOfCourse
-asmt = requests.get('https://canvas.instructure.com/api/v1/courses/'+ nameOfCourse +'/assignments/?per_page=200', headers=headers)
-with open('data.txt', 'w') as outfile:
-    json.dump(asmt.text, outfile)
+#nameOfCourse = str(let_user_pick(courseCode))
+#print nameOfCourse
+asmtList = []
+tempList=[]
+
+for x in range(0, len(courseResponseList)):
+    nameOfCourse = str(courseId[x])
+    print nameOfCourse
+    asmt = requests.get('https://canvas.instructure.com/api/v1/courses/'+ nameOfCourse +'/assignments/?per_page=200', headers=headers)
+    rawAsmtResponse = asmt.text
+    asmtResponseList = json.loads(rawAsmtResponse)
+    data = asmtResponseList
+    for element in data:
+            del element['muted']
+            del element['due_date_required']
+            del element['submissions_download_url']
+            del element['locked_for_user']
+            del element['in_closed_grading_period']
+            del element['html_url']
+            del element['intra_group_peer_reviews']
+            del element['secure_params']
+            del element['submission_types']
+            del element['created_at']
+            del element['updated_at']
+            del element['grade_group_students_individually']
+            del element['anonymous_peer_reviews']
+            del element['post_to_sis']
+            del element['automatic_peer_reviews']
+            del element['group_category_id']
+            del element['omit_from_final_grade']
+            del element['lock_at']
+            del element['unlock_at']
+            del element['position']
+            del element['moderated_grading']
+            del element['only_visible_to_overrides']
+            del element['peer_reviews']
+            del element['grading_standard_id']
+            del element['assignment_group_id']
+            del element['max_name_length']
+            del element['published']
+            del element['description']
+
+            tempList.append(element)
+
+print tempList
+
+with open('AllAssignments.json', 'w') as outfile:
+    json.dump(tempList, outfile)
 #modlist = requests.get('https://canvas.instructure.com/api/v1/courses/18760000000050040/modules', headers=headers)
 #print "Authentication Code:" + str(auth)
 #=================Getting the Assignment ID==================
 rawAsmtResponse = asmt.text
 #print rawAsmtResponse
 asmtResponseList = json.loads(rawAsmtResponse)
-print len(asmtResponseList)
+#print len(asmtResponseList)
 asmtId = []
 asmtName = []
 
-data = asmtResponseList
-for element in data:
-        del element['muted']
-        del element['due_date_required']
-        del element['submissions_download_url']
-        del element['locked_for_user']
-        del element['in_closed_grading_period']
-        del element['html_url']
-        del element['intra_group_peer_reviews']
-        del element['secure_params']
-        del element['submission_types']
-        del element['created_at']
-        del element['updated_at']
-        del element['grade_group_students_individually']
-        del element['anonymous_peer_reviews']
-        del element['post_to_sis']
-        del element['automatic_peer_reviews']
-        del element['group_category_id']
-        del element['omit_from_final_grade']
-        del element['lock_at']
-        del element['unlock_at']
-        del element['position']
-        del element['moderated_grading']
-        del element['only_visible_to_overrides']
-        del element['peer_reviews']
-        del element['grading_standard_id']
-        del element['assignment_group_id']
-        del element['max_name_length']
-        del element['published']
-        del element['description']
 
-print data
 with open('assignments.txt', 'w') as outfile:
     json.dump(data, outfile)
+
+
 
 for x in range(0, len(asmtResponseList)):
     sampleAsmt = asmtResponseList[x]
@@ -110,8 +124,8 @@ for x in range(0, len(asmtResponseList)):
 
 
 
-for i in range(0, len(asmtName)):
-    print asmtName[i]
+#for i in range(0, len(asmtName)):
+#    print asmtName[i]
 #print asmtId
 
 
