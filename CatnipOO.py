@@ -88,12 +88,12 @@ class PullCanvas:
 
     def comparecourses(self, newCourses):
         # compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
-        oldCourses = OpenJSON.openjson("courses.json")
+        oldCourses = ChangeJSON().openjson("courses.json")
         return change
 
     def compareassignment(self, newAssignment):
-        oldAssignments = OpenJSON.openjson("assignments.json")
-        #compare assignments in JSON dile with newly pulled assignments and return a boolean
+        # compare assignments in JSON dile with newly pulled assignments and return a boolean
+        oldAssignments = ChangeJSON().openjson("assignments.json")
         return change
 
 
@@ -111,7 +111,7 @@ class Caesar:
         classSch = []
         # Pull terms from CAESAR to match the terms of courses from CANVAS
         terms = self.pullterms()
-        courseCode = PullCanvas.getname()
+        courseCode = PullCanvas().getname()
 
         for course in courseCode:
             courses = caesarKey
@@ -143,13 +143,12 @@ class Caesar:
             classSch.append(cls)
         # dumping class schedule to JSON file
         cSch = list(itertools.chain.from_iterable(classSch))
-        ChangeJSON.writejson("classSch.json", cSch)
+        ChangeJSON().writejson("classSch.json", cSch)
 
     def getSchedule(self):
-        if os.path.exists("./classSch.txt") == False:
+        if os.path.exists("./classSch.json") == False:
             self.pullschedule()
-        with open('classSch.txt') as json_data:
-            schedule = json.load(json_data)
+        schedule = ChangeJSON().openjson("classSch.json")
         return schedule
 
 
