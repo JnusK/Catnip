@@ -100,8 +100,6 @@ class PullCanvas:
         oldAssignments = ChangeJSON().openjson("assignments.json")
         return change
 
-
-
 class Caesar:
     # def __init__(self):
 
@@ -155,21 +153,13 @@ class Caesar:
         schedule = ChangeJSON().openjson("classSch.json")
         return schedule
 
-
 class DataEntry:
     def adddata(self):
         pass
 
-
 class DeleteTask:
     def deletetask(self):
         pass
-
-
-class CheckCourse:
-    def checkcourses(self):
-        pass
-
 
 class ChangeJSON:
     def openjson(self, fileName):
@@ -180,13 +170,6 @@ class ChangeJSON:
     def writejson(self, fileName, list):
         with open(fileName, 'w') as outfile:
             json.dump(list, outfile)
-
-
-class CheckTerm:
-    # Seems like it is useless now that I integrated it into Caesar.pullSchedule
-    def checkterm(self):
-        pass
-
 
 class PriorityView:
     pass
@@ -235,9 +218,7 @@ class Task:
 
     def gettimetaken(self):
         return self.time_taken
-
-
-class CompleteTask:
+    
     def completetask(self):
         # change end_dt to current dt
         # Stop stopwatch and record time taken
