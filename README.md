@@ -23,8 +23,8 @@ Tasks to be done:
   
   
 Ramblings and thoughts:
-	Nested layout with box layout at the bottom for menu and the main part of the screen for active view
-	ScreenManager class & TransitionBase class for multiple screens
+	- Nested layout with box layout at the bottom for menu and the main part of the screen for active view
+	- ScreenManager class & TransitionBase class for multiple screens
   
   
   CAESAR course API documentation: http://developer.asg.northwestern.edu/docs/
