@@ -8,8 +8,6 @@ from Keys import headers
 
 
 class PullCanvas:
-    def __init__(self):
-        self.courseName1 = x
 
     def pullcourses(self):
         # pull courses from Canvas and return list of courses, do not store to JSON in this method
@@ -36,20 +34,6 @@ class PullCanvas:
             CourseMap = {v: k for k, v in ICourseMap.iteritems()}
 
         return CourseMap
-
-    def let_user_pick(options):
-        print("Please choose:")
-        for idx, element in enumerate(options):
-            print("{}) {}".format(idx+1,element))
-        i = input("Enter number: ")
-        try:
-            if 0 < int(i) <= len(options):
-                element = options[i-1]
-                print element
-                return CourseMap.get(element)
-        except:
-            pass
-        return None
 
     def pullassignments(self):
         # pull assignments
@@ -96,9 +80,7 @@ class PullCanvas:
                     tempList.append(element)
 
         print tempList
-
-        with open('AllAssignments.json', 'w') as outfile:
-            json.dump(tempList, outfile)
+        return tempList
 
     def getName(self):
         return courseCode
@@ -110,20 +92,18 @@ class PullCanvas:
 
     def compareassignment(self, newAssignment):
         # compare assignments in JSON dile with newly pulled assignments and return a boolean
-
-
         return change
 
-    def storecourses(self, courses):
-        with open('courses.txt', 'w') as outfile:
+    def storeCourses(self, courses):
+        with open('courses.json', 'w') as outfile:
             json.dump(courses, outfile)
 
-    def storeassignemnts(self, assignments):
-        with open('assignments.txt', 'w') as outfile:
+    def storeAssignments(self, assignments):
+        with open('assignments.json', 'w') as outfile:
             json.dump(assignments, outfile)
 
-    def opencoursesjson(self):
-        with open('courses.txt') as json_data:
+    def openCoursesJson(self):
+        with open('courses.json') as json_data:
             courses = json.load(json_data)
         return courses
 
