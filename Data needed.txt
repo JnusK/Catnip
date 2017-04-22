@@ -11,7 +11,7 @@ Assignment Object Data
 
 Course Object Data
 "id"
-"name"
+"course_code"
 
 Caesar Term Data
 "id"
@@ -31,3 +31,19 @@ Caesar Course Data
 "title"
 "component"
 
+Last Pull
+"datetime"	#To compare last pull with newly updated/created assignments
+
+Task
+"id"		#Unique, own tasks have alphabet ids to remove conflict with 			canvas
+"description"			(optional)
+"start_at"	#dt format	(optional)
+"end_at"	#dt format	(optional)
+"points_possible"		(optional)
+"course_id"			(optional)
+"name"
+"type"		#type of assignments will be like isit a quiz?
+"category"	#school/social/family/self/etc
+"has_submitted_submissions"	#completed
+
+Completed Task
