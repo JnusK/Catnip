@@ -83,7 +83,11 @@ class PullCanvas:
         print tempList
         return tempList
 
-    def getName(self):
+    def getcoursecode(self):
+        courses = ChangeJSON().openjson("courses.json")
+        courseCode = []
+        for course in courses:
+            courseCode.append(course[u'course_code'])
         return courseCode
 
     def comparecourses(self, newCourses):
@@ -111,7 +115,7 @@ class Caesar:
         classSch = []
         # Pull terms from CAESAR to match the terms of courses from CANVAS
         terms = self.pullterms()
-        courseCode = PullCanvas().getname()
+        courseCode = PullCanvas().getcoursecode()
 
         for course in courseCode:
             courses = caesarKey
