@@ -93,6 +93,7 @@ class PullCanvas:
 
     def compareassignment(self, newAssignment):
         # compare assignments in JSON dile with newly pulled assignments and return a boolean
+        oldAssignments = ChangeJSON().openjson("assignments.json")
         return change
 
 
