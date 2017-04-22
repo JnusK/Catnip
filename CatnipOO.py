@@ -92,6 +92,7 @@ class PullCanvas:
         return change
 
     def compareassignment(self, newAssignment):
+        oldAssignments = OpenJSON.openjson("assignments.json")
         #compare assignments in JSON dile with newly pulled assignments and return a boolean
         return change
 
