@@ -22,7 +22,9 @@ Tasks to be done:
   - Add ability for manual entry of tasks
   
   
-  
+Ramblings and thoughts:
+Nested layout with box layout at the bottom for menu and the main part of the screen for active view
+ScreenManager class & TransitionBase class for multiple screens
   
   
   CAESAR course API documentation: http://developer.asg.northwestern.edu/docs/
