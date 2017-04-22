@@ -31,6 +31,8 @@ class PullCanvas:
             courseCode.append(c)
             ICourseMap = dict(zip(courseId, courseCode))
             CourseMap = {v: k for k, v in ICourseMap.iteritems()}
+            
+        ChangeJSON.writejson("lastPull.json", datetime.datetime)
 
         return CourseMap
 
@@ -93,12 +95,30 @@ class PullCanvas:
     def comparecourses(self, newCourses):
         # compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
         oldCourses = ChangeJSON().openjson("courses.json")
-        return change
+        newCourses = pullcourses()
+
+        if len(oldCourses) != len(newCourses):
+            return true
+        else:
+            for i in oldCourses:
+                for j in newCourses:
+                    if i['courseId'] != j['courseId']:
+                        return true
+        return false
 
     def compareassignment(self, newAssignment):
         # compare assignments in JSON dile with newly pulled assignments and return a boolean
         oldAssignments = ChangeJSON().openjson("assignments.json")
-        return change
+        newAssignments = pullassignments()
+
+        if len(oldAssignments) != len(newAssignments):
+            return true
+        else:
+            for i in oldAssignments:
+                for j in newAssignments:
+                    if i['id'] != j['id']:
+                        return true
+        return false
 
 class Caesar:
     # def __init__(self):
