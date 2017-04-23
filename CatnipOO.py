@@ -225,7 +225,23 @@ class ListView:
 
 
 class CalendarView:
-    pass
+    def setintensity(self):
+        if os.path.exists("./intensity.json") == False:
+            intensity = {}
+            assignmentlist = ChangeJSON().openjson("assignments.json")
+            for assignment in assignmentlist:
+                if assignment[u'due_at'] != None:
+                    year, mth, dateTemp = assignment[u'due_at'].split('-')
+                    date = dateTemp[:2]
+                    if year not in intensity:
+                        intensity[year] = {mth: {}}
+                    if mth not in intensity[year]:
+                        intensity[year][mth] = {date: 0}
+                    if date not in intensity[year][mth]:
+                        intensity[year][mth][date] = 1
+                    else:
+                        intensity[year][mth][date] += 1
+            ChangeJSON().writejson("intensity.json", intensity)
 
 
 class AddTask:
@@ -279,9 +295,9 @@ def main():
         ChangeJSON().writejson("assignments.json", PullCanvas().pullassignments())
     if os.path.exists("./classSch.json") == False:
         Caesar().pullschedule()
-    if PullCanvas().comparecourses(PullCanvas().pullcourses()) == True:
-        ChangeJSON().writejson("courses.json", PullCanvas().pullcourses())
-
+    #if PullCanvas().comparecourses(PullCanvas().pullcourses()) == True:
+        #ChangeJSON().writejson("courses.json", PullCanvas().pullcourses())
+    CalendarView().setintensity()
 
 if __name__ == '__main__':
     main()
