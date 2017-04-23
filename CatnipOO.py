@@ -41,24 +41,23 @@ class PullCanvas:
     def pullassignments(self):
         # pull assignments
         tempList = []
-
         courseId = self.getcourseid()
 
-        print courseId
+        #print courseId
         for x in range(0, len(courseId)):
             nameOfCourse = str(courseId[x])
             print nameOfCourse
             asmt = requests.get(
                 'https://canvas.instructure.com/api/v1/courses/' + nameOfCourse + '/assignments/?per_page=200',
                 headers=headers)
-            print asmt
+            #print asmt
             data = asmt.json()
-            print data
+            #print data
 
             rawAsmtResponse = asmt.text
             asmtResponseList = json.loads(rawAsmtResponse)
             data = asmtResponseList
-            print data
+            #print data
             for element in data:
                 del element['muted']
                 del element['due_date_required']
@@ -91,14 +90,14 @@ class PullCanvas:
 
                 tempList.append(element)
 
-        print tempList
         return tempList
 
     def getcourseid(self):
         courses = ChangeJSON().openjson("courses.json")
+        #print courses
         courseID = []
         for course in courses:
-            courseID.append(course[u'id'])
+            courseID.append(courses[course])
         return courseID
 
     def getcoursecode(self):
@@ -106,8 +105,17 @@ class PullCanvas:
         courses = ChangeJSON().openjson("courses.json")
         courseCode = []
         for course in courses:
-            courseCode.append(course[u'course_code'])
+            courseCode.append(course)
         return courseCode
+
+    def getassignmentname(self):
+        # return assignment name for UI manipulation
+        asmt = ChangeJSON().openjson("assignments.json")
+        asmtName = []
+        for assignment in asmt:
+            asmtName.append(assignment[u'name'])
+        print asmtName
+        return asmtName
 
     def comparecourses(self, newCourses):
         # compare courses in JSON file with newly pulled courses to see if there is any changes and return a boolean
