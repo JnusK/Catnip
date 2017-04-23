@@ -274,13 +274,13 @@ class Task:
 
 def main():
     if os.path.exists("./courses.json") == False:
-        courses = PullCanvas().pullcourses()
-        ChangeJSON().writejson("courses.json", courses)
+        ChangeJSON().writejson("courses.json", PullCanvas().pullcourses())
     if os.path.exists("./assignments.json") == False:
-        assignments = PullCanvas().pullassignments()
-        ChangeJSON().writejson("assignments.json", assignments)
+        ChangeJSON().writejson("assignments.json", PullCanvas().pullassignments())
     if os.path.exists("./classSch.json") == False:
         Caesar().pullschedule()
+    if PullCanvas().comparecourses(PullCanvas().pullcourses()) == True:
+        ChangeJSON().writejson("courses.json", PullCanvas().pullcourses())
 
 
 if __name__ == '__main__':
