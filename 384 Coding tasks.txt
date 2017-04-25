@@ -1,0 +1,9 @@
+Make month dynamic in calendar view
+Make month buttons responsive
+Add fields to database
+Make date buttons responsive
+Make list buttons responsive
+Make list to be rearrangable
+Make static priority UI
+Make boxes in priority UI responsive
+Make priority and calendar UI see class schedule

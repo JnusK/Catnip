@@ -32,18 +32,19 @@ Caesar Course Data
 "component"
 
 Last Pull
-"datetime"	#To compare last pull with newly updated/created assignments
+"datetime"	#To compare last pull with newly updated/created assignments, using 
 
 Task
 "id"		#Unique, own tasks have alphabet ids to remove conflict with 			canvas
-"description"			(optional)
-"start_at"	#dt format	(optional)
-"end_at"	#dt format	(optional)
-"points_possible"		(optional)
-"course_id"			(optional)
+"description"				(optional)
+"start_at"		#dt format	(optional)
+"end_at"		#dt format	(optional)(will be entered when task is 					marked complete)
+"points_possible"			(optional)
+"course_id"				(optional)
 "name"
-"type"		#type of assignments will be like isit a quiz?
-"category"	#school/social/family/self/etc
+"type"			#type of assignments will be like isit a quiz?
+"category"		#school/social/family/self/etc
 "has_submitted_submissions"	#completed
+"priority"		# level of priority (numerical?)
+"time_needed"		# 1-64 (each block is 15min) default is 2
 
-Completed Task
