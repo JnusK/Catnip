@@ -160,6 +160,8 @@ class Caesar:
     def pullterms(self):
         #pull terms information from CAESAR
         response = requests.get('http://api.asg.northwestern.edu/terms/', params=caesarKey)
+        if "200" not in str(response):
+            raise RuntimeError("CAESAR Authorization Failed")
         terms = response.json()
         return terms
 
