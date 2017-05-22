@@ -211,7 +211,7 @@ class Caesar:
 
 class GoogleCalendar:
 
-    def get_credentials(self):
+    def getcredentials(self):
         """Gets valid user credentials from storage.
 
         If nothing has been stored, or if the stored credentials are invalid,
@@ -243,7 +243,7 @@ class GoogleCalendar:
         10 events on the user's calendar.
         """
         tasks = []
-        credentials = GoogleCalendar().get_credentials()
+        credentials = self.getcredentials()
         http = credentials.authorize(httplib2.Http())
         service = discovery.build('calendar', 'v3', http=http)
 
@@ -268,8 +268,8 @@ class GoogleCalendar:
             # change timezone
             task[u'start'] = event['start'].get['dateTime']
             tasks.append(task)
-            flatTask = list(itertools.chain.from_iterable(task))
-            ChangeJSON().appendjson("assignments.json", flatTask)
+        flatTask = list(itertools.chain.from_iterable(task))
+        ChangeJSON().appendjson("assignments.json", flatTask)
 
 class DeleteTask:
     def deletetask(self):
