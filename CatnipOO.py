@@ -289,6 +289,11 @@ class ChangeJSON:
     def appendjson(self, fileName, list):
         with open(fileName, 'a') as outfile:
             json.dump(list, outfile)
+        with open(fileName) as json_data:
+            requestedFile = json.load(json_data)
+        flatDict = list(itertools.chain.from_iterable(requestedFile))
+        with open(fileName, 'w') as outfile:
+            json.dump(flatDict, outfile)
 
 class PriorityView:
     pass
