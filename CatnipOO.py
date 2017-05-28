@@ -6,6 +6,7 @@ import datetime
 import time
 import httplib2
 import os
+import pytz
 
 from Keys import caesarKey
 from Keys import token
@@ -59,17 +60,15 @@ class PullCanvas:
     def pullassignments(self):
         # pull assignments
         tempList = []
-
+        #Get course ID to pull assignments from Canvas
         courseId = self.getcourseid()
 
-        print courseId
         for x in range(0, len(courseId)):
             nameOfCourse = str(courseId[x])
             print nameOfCourse
             asmt = requests.get(
                 'https://canvas.instructure.com/api/v1/courses/' + nameOfCourse + '/assignments/?per_page=200',
                 headers=headers)
-            print asmt
             data = asmt.json()
             print data
 
@@ -106,10 +105,21 @@ class PullCanvas:
                 del element['max_name_length']
                 del element['published']
                 del element['description']
+                element.pop('grading_type', None)
+                element.pop('url', None)
+                element.pop('external_tool_tag_attributes', None)
+                element.pop('lock_info', None)
+                element.pop('lock_explanation', None)
+                element.pop('anonymous_submissions', None)
+                element.pop('allowed_extensions', None)
+                #add element key
+                element['priority'] = 0
 
                 tempList.append(element)
 
-        print tempList
+        if os.path.exists("./lastupdate.json") == False:
+            ChangeJSON().writejson("lastupdate.json", None)
+
         return tempList
 
     def getcourseid(self):
@@ -249,27 +259,45 @@ class GoogleCalendar:
 
         now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
         print (now)
-        print('Getting the upcoming 10 events')
+        if os.path.exists("./lastupdate.json") == False:
+            placeholder = {}
+            ChangeJSON().writejson("lastupdate.json", placeholder)
+        lastupdate = ChangeJSON().openjson("lastupdate.json")
+
+        #default is 100 events, can set up to 250 events using maxResults = 250 as a parameter
         eventsResult = service.events().list(
-            calendarId='primary', timeMin=now, maxResults=10, singleEvents=True,
+            calendarId='primary', timeMin=now, singleEvents=True,
             orderBy='startTime').execute()
         events = eventsResult.get('items', [])
         print (events)
 
-        if not events:
-            print('No upcoming events found.')
+
         for event in events:
             task = {}
             start = event['start'].get('dateTime', event['start'].get('date'))
             print(start, event['summary'])
+            # To use when last update is utilised to cut down on pulling stored event
+            # not used in current code
+            #if (u'googlecalendar' in lastupdate):
+                #if (lastupdate['googlecalendar'] - event['updated'] < 0):
+                    #continue
             task[u'name'] = event['summary']
+            # change timezone, somehow the code fail
+            if u'end' in event:
+                print (event['end'].get('dateTime', event['end'].get('date')))
+                task[u'due_at'] = event['end'].get('dateTime', event['end'].get('date'))
+                #task[u'due_at'] = event['end'].get(['dateTime'], event['end'].get('date')).datetime.datetime.astimezone(pytz.utc)
             # change timezone
-            task[u'due_at'] = event['end'].get['dateTime']
-            # change timezone
-            task[u'start'] = event['start'].get['dateTime']
+            task[u'start'] = event['start'].get('dateTime', event['start'].get('date'))
+            task[u'has_submitted_submissions'] = False
+            task[u'priority'] = 0
+
             tasks.append(task)
-        flatTask = list(itertools.chain.from_iterable(task))
-        ChangeJSON().appendjson("assignments.json", flatTask)
+        print (tasks)
+
+
+        #lastupdate['googlecalendar'] = datetime.datetime.utcnow()
+        return tasks
 
 class DeleteTask:
     def deletetask(self):
@@ -282,16 +310,13 @@ class ChangeJSON:
             requestedFile = json.load(json_data)
         return requestedFile
 
-    def writejson(self, fileName, list):
+    def writejson(self, fileName, dict):
         with open(fileName, 'w') as outfile:
-            json.dump(list, outfile)
+            json.dump(dict, outfile)
 
-    def appendjson(self, fileName, list):
-        with open(fileName, 'a') as outfile:
-            json.dump(list, outfile)
-        with open(fileName) as json_data:
-            requestedFile = json.load(json_data)
-        flatDict = list(itertools.chain.from_iterable(requestedFile))
+    def appendjson(self, fileName, dict):
+        requestedFile = self.openjson(fileName)
+        flatDict = dict + requestedFile
         with open(fileName, 'w') as outfile:
             json.dump(flatDict, outfile)
 
@@ -368,17 +393,19 @@ class Task:
 
 
 def main():
-    if os.path.exists("./courses.json") == False:
-        ChangeJSON().writejson("courses.json", PullCanvas().pullcourses())
-    if os.path.exists("./assignments.json") == False:
-        ChangeJSON().writejson("assignments.json", PullCanvas().pullassignments())
-    if os.path.exists("./classSch.json") == False:
-        Caesar().pullschedule()
+    #if os.path.exists("./courses.json") == False:
+    ChangeJSON().writejson("courses.json", PullCanvas().pullcourses())
+    #if os.path.exists("./assignments.json") == False:
+    ChangeJSON().writejson("assignments.json", PullCanvas().pullassignments())
+    #if os.path.exists("./classSch.json") == False:
+    Caesar().pullschedule()
+    ChangeJSON().appendjson("assignments.json", GoogleCalendar().addevents())
     #if PullCanvas().comparecourses(PullCanvas().pullcourses()) == True:
         #ChangeJSON().writejson("courses.json", PullCanvas().pullcourses())
         #Caesar().pullschedule()
     #if PullCanvas().compareassignment(PullCanvas().pullassignments()) == True:
         #append new assignments to old assignment list
+
     CalendarView().setintensity()
 
 
