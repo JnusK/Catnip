@@ -6,6 +6,7 @@ import datetime
 import time
 import httplib2
 import os
+import dateutil
 import pytz
 
 from Keys import caesarKey
@@ -16,6 +17,8 @@ from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
+
+#category in assignment.json: 0 is for work, 1 is for google calendar for now
 
 #for google calendar integration
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
@@ -114,6 +117,7 @@ class PullCanvas:
                 element.pop('allowed_extensions', None)
                 #add element key
                 element['priority'] = 0
+                element['category'] = 0
 
                 tempList.append(element)
 
@@ -291,6 +295,7 @@ class GoogleCalendar:
             task[u'start'] = event['start'].get('dateTime', event['start'].get('date'))
             task[u'has_submitted_submissions'] = False
             task[u'priority'] = 0
+            task[u'category'] = 1
 
             tasks.append(task)
         print (tasks)

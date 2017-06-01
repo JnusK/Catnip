@@ -16,8 +16,12 @@ from kivy.event import EventDispatcher
 
 from CatnipOO import ChangeJSON
 
+
 import datetime
 import calendar
+import pytz
+import dateutil.parser
+import dateutil.tz
 
 #Builder.load_file('CalendarView.kv')
 
@@ -83,14 +87,88 @@ class CalendarView(GridLayout):
             #Button.color = 0, 1, 0, 1
             self.add_widget(Button(text = strdate))
 
+class PriorityView(GridLayout):
+    def __init__(self, **kwargs):
+        super(PriorityView, self).__init__(**kwargs)
+        self.cols = 4
+        self.rows = 5
+        taskCount = 0
+        tasks = []
+        counter = 0
+        requestedList = ChangeJSON().openjson("assignments.json")
+        for task in requestedList:
+            #something is wrong with the 'has_submitted_submissions', it is not reading boolean
+            if 'has_submitted_submissions' != True:
+                print task['name']
+                if 'start' in task:
+                    if task['start'][-1] == 'Z':
+                        taskDT = dateutil.parser.parse(task['start'])
+                    elif task['start'][-6] == '+':
+                        dtParse = dateutil.parser.parse(task['start'])
+                        taskDT = dtParse.astimezone(pytz.utc)
+                    elif task['start'][-3] == '-':
+                        dtParse = dateutil.parser.parse(task['start'])
+                        taskDT = pytz.utc.localize(dtParse)
+                    else:
+                        dtParse = dateutil.parser.parse(task['start'])
+                        taskDT = pytz.utc.localize(dtParse)
+
+                elif 'due_at' in task and task['due_at'] != None:
+                    if task['due_at'][-1] == 'Z':       #For tasks with timezone at UTC
+                        #datetime.datetime.strptime does not make aware datetime
+                        #taskDT = datetime.datetime.strptime(task['due_at'], '%Y-%m-%dT%H:%M:%SZ')
+                        #dateutil.parser.parse makes aware datetime
+                        taskDT = dateutil.parser.parse(task['due_at'])
+                    elif task['due_at'][-6] == '+':     #For tasks with other timezones
+                        #dt = task['due_at'][:19]
+                        #taskDT = datetime.datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S')
+                        dtParse = dateutil.parser.parse(task['due_at'])
+                        taskDT = dtParse.astimezone(pytz.utc)
+                    elif task['due_at'][-3] == '-': #Detect tasks with no timezone and time
+                        dtParse = dateutil.parser.parse(task['due_at'])
+                        taskDT = pytz.utc.localize(dtParse)
+                    else:   #Detect tasks with no timezone
+                        dtParse = dateutil.parser.parse(task['due_at'])
+                        taskDT = pytz.utc.localize(dtParse)
+                #Get current aware datetime
+                now = datetime.datetime.now(dateutil.tz.tzlocal())
+                awareTask = taskDT.astimezone(pytz.utc)
+                difference = awareTask - now
+                print difference
+                if difference < datetime.timedelta(days=5) and difference > datetime.timedelta(days=0):
+                    tasks.append(task)
+                    counter = counter + 1
+        Button.background_color = 1, 0.8, 1, 1
+        self.add_widget(Button(text=str(now.day)))
+        Button.background_color = 1, 0.8, 1, 0.5
+        self.add_widget(Button(text=str((now + datetime.timedelta(days=1)).day)))
+        self.add_widget(Button(text=str((now + datetime.timedelta(days=2)).day)))
+        self.add_widget(Button(text=str((now + datetime.timedelta(days=3)).day)))
+        Label.background_color = 0, 0, 0, 0
+        for x in range(8-counter/2):
+            self.add_widget(Label(text=' '))
+        for item in tasks:
+            if item['category'] == 0:
+                Button.background_color = 1, 0, 0, 1
+            elif item['category'] == 1:
+                Button.background_color = 0, 0, 1, 1
+            else:
+                Button.background_color = 1, 0.5, 0.25, 1
+            self.add_widget(Button(text=item['name']))
+        for x in range(8-counter/2):
+            self.add_widget(Label(text=' '))
+
+
 
 
 class CatnipApp(App):
 
     def build(self):
-        calendar = CalendarView()
+        #calendar = CalendarView()
         #Clock.schedule_interval(calendar.update, 86400)
-        return calendar
+        #return calendar
+        priority = PriorityView()
+        return priority
 
 if __name__ == '__main__':
     CatnipApp().run()
